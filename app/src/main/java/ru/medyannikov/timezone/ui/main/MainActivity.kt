@@ -33,8 +33,8 @@ class MainActivity : BaseActivity() {
   private fun initAdapterTimeZone(list: List<Pair<String, String>>) {
     val adapterTimeZone = AdapterTimeZone(this, list)
     spinner.adapter = adapterTimeZone
-    val tz = TimeZone.getTimeZone(defaultSharedPreferences.getString("TIME_ZONE", null))
-    val pos = adapterTimeZone.getPosition(tz.id)
+    val defaultTimeZone = defaultSharedPreferences.getString("TIME_ZONE", null) ?: TimeZone.getDefault().id
+    val pos = adapterTimeZone.getPosition(defaultTimeZone)
     spinner.setSelection(pos)
     spinner.gravity = Gravity.FILL
   }

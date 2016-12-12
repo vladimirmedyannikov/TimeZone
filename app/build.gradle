@@ -2,6 +2,11 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 
 android {
+  signingConfigs {
+    release {
+
+    }
+  }
   compileSdkVersion 25
   buildToolsVersion "25.0.0"
   defaultConfig {
@@ -11,6 +16,7 @@ android {
     versionCode 1
     versionName "1.0"
     testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    signingConfig signingConfigs.release
   }
   buildTypes {
     release {
@@ -21,6 +27,7 @@ android {
   sourceSets {
     main.java.srcDirs += 'src/main/kotlin'
   }
+  productFlavors {}
 }
 
 kapt {
@@ -30,7 +37,6 @@ kapt {
 dependencies {
   compile fileTree(dir: 'libs', include: ['*.jar'])
 
-  // view
   compile depends.ANDROID_APPCOMPAT_V7
   compile depends.ANDROID_RECYCLER_VIEW
   compile depends.ANDROID_DESIGN
@@ -46,13 +52,12 @@ dependencies {
   compile depends.GESTURE_VIEW
   compile depends.FLEX_BOX
 
-  // di
   compile depends.DAGGER
   kapt depends.DAGGER_COMPILER
-  // debug
+
   compile depends.STETHO
   compile depends.GLIDE
-  // rx
+
   compile depends.RX_PERMISSION
   compile depends.RX_JAVA
   compile depends.RX_ANDROID

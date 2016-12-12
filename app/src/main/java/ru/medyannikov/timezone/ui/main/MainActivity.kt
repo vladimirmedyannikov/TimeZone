@@ -2,11 +2,12 @@ package ru.medyannikov.timezone.ui.main
 
 import android.os.Bundle
 import android.view.Gravity
+import android.widget.Button
 import android.widget.Spinner
-import butterknife.BindView
-import butterknife.OnClick
 import org.jetbrains.anko.alarmManager
 import org.jetbrains.anko.defaultSharedPreferences
+import org.jetbrains.anko.find
+import org.jetbrains.anko.onClick
 import ru.medyannikov.timezone.R
 import ru.medyannikov.timezone.service.BootReceiver.Companion.TIME_ZONE
 import ru.medyannikov.timezone.ui.base.AdapterTimeZone
@@ -16,14 +17,19 @@ import java.util.*
 
 class MainActivity : BaseActivity() {
 
-  @BindView(R.id.spinner_time_zone)
-  lateinit var spinner: Spinner
+  val spinner: Spinner by lazy { find<Spinner>(R.id.spinner_time_zone_1) }
+  val button: Button by lazy { find<Button>(R.id.buttonOk_1) }
 
   override fun getLayout() = R.layout.a_main
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     initAdapterTimeZone(getTimeZoneList())
+    initViews()
+  }
+
+  private fun initViews() {
+    button.onClick { onClickConfirmZone() }
   }
 
   private fun getTimeZoneList(): List<Pair<String, String>> {
@@ -42,7 +48,6 @@ class MainActivity : BaseActivity() {
     spinner.gravity = Gravity.FILL
   }
 
-  @OnClick(R.id.buttonOk)
   fun onClickConfirmZone() {
     val timeZoneId = (spinner.selectedItem as Pair<String, String>).second
 
